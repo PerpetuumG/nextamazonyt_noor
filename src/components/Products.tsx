@@ -2,8 +2,11 @@ import Container from '@/components/Container';
 import Link from 'next/link';
 import { PcCase, ScanFace, Smartphone, Watch } from 'lucide-react';
 import Product from '@/components/Product';
+import { getProducts } from '@/helpers';
 
-const Products = () => {
+const Products = async () => {
+  const products = await getProducts();
+
   return (
     <div className={'mt-10 mb-60'}>
       <Container>
@@ -51,7 +54,7 @@ const Products = () => {
           </div>
         </div>
 
-        <Product />
+        <Product products={products} />
       </Container>
     </div>
   );
