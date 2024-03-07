@@ -4,7 +4,6 @@ import { ProductType } from '../../type';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Heart } from 'lucide-react';
-import { black } from 'next/dist/lib/picocolors';
 import FormattedPrice from '@/components/FormattedPrice';
 
 interface Item {
@@ -19,7 +18,7 @@ const Product = ({ products }: Item) => {
           key={item._id}
           className='relative bg-white group border-[1px] border-zinc-200 hover:border-zinc-500 duration-300 hover:shadow-xl overflow-hidden'
         >
-          <Link href={'/'}>
+          <Link href={{ pathname: `/${item?._id}`, query: { _id: item?._id } }}>
             <Image
               src={item?.image}
               alt={item?.title}
@@ -45,8 +44,15 @@ const Product = ({ products }: Item) => {
             </p>
 
             <div className={'flex items-center justify-between text-sm mt-2'}>
-              <button className={'uppercase font-semibold hover:text-designColor duration-300'}>Add to cart</button>
-              <Link href={'/'} className={'uppercase font-semibold hover:text-designColor duration-300'}>More Info</Link>
+              <button className={'uppercase font-semibold hover:text-designColor duration-300'}>
+                Add to cart
+              </button>
+              <Link
+                href={{ pathname: `/${item?._id}`, query: { _id: item?._id } }}
+                className={'uppercase font-semibold hover:text-designColor duration-300'}
+              >
+                More Info
+              </Link>
             </div>
           </div>
         </div>
