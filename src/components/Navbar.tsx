@@ -5,9 +5,11 @@ import Link from 'next/link';
 import { Heart, ShoppingBagIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { navigation } from '@/constants/data';
+import { signIn, useSession } from 'next-auth/react';
 
 const Navbar = () => {
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   return (
     <div
@@ -58,7 +60,7 @@ const Navbar = () => {
           </Link>
 
           <Link
-            href={'/wishlist'}
+            href={'/cart'}
             className={'hover:text-black cursor-pointer duration-200 relative group'}
           >
             <ShoppingBagIcon className={'w-7 h-7'} />
@@ -71,14 +73,23 @@ const Navbar = () => {
             </span>
           </Link>
 
-          <button
-            className={`hover:text-black cursor-pointer duration-200 relative overflow-hidden group text-sm uppercase font-semibold`}
-          >
-            Login
-            <span
-              className={`absolute h-[1px] w-full bg-blue-700 left-0 bottom-0 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500`}
-            />
-          </button>
+          {session ? (
+            <Link
+              href={'/profile'}
+              className='hover:text-black cursor-pointer duration-200 relative overflow-hidden group text-sm uppercase font-semibold'
+            >
+              Profile
+              <span className='absolute h-[1px] w-full bg-blue-700 left-0 bottom-0 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500' />
+            </Link>
+          ) : (
+            <button
+              onClick={() => signIn()}
+              className='hover:text-black cursor-pointer duration-200 relative overflow-hidden group text-sm uppercase font-semibold'
+            >
+              Login
+              <span className='absolute h-[1px] w-full bg-blue-700 left-0 bottom-0 -translate-x-[100%] group-hover:translate-x-0 transition-transform duration-500' />
+            </button>
+          )}
         </div>
       </div>
     </div>
