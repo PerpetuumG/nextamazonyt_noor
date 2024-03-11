@@ -6,10 +6,14 @@ import { Heart, ShoppingBagIcon } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { navigation } from '@/constants/data';
 import { signIn, useSession } from 'next-auth/react';
+import { useSelector } from 'react-redux';
+import { StateProps } from '../../type';
 
 const Navbar = () => {
   const pathname = usePathname();
   const { data: session } = useSession();
+
+  const { productData, favoriteData } = useSelector((state: StateProps) => state.pro);
 
   return (
     <div
@@ -55,7 +59,7 @@ const Navbar = () => {
                 'absolute top-0 -left-1 bg-zinc-800 text-zinc-200 w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-black font-semibold group-hover:text-white'
               }
             >
-              0
+              {favoriteData ? favoriteData.length : 0}
             </span>
           </Link>
 
@@ -69,7 +73,7 @@ const Navbar = () => {
                 'absolute top-0 -left-1 bg-zinc-800 text-zinc-200 w-4 h-4 rounded-full text-xs flex items-center justify-center group-hover:bg-black font-semibold group-hover:text-white'
               }
             >
-              0
+              {productData ? productData.length : 0}
             </span>
           </Link>
 
